@@ -15,8 +15,9 @@ def index():
     def check_close_game(url):
       response = requests.get(url)
       numGames = response.json().get("numGames")
-      result = "Games worth watching on " + yesterday + " : " 
+      result = "Games worth watching on " + str(yesterday) + ": " 
       # TODO: include checks for NoneTypes and robust API requests
+      # TODO: insert response for 0 games worth watching
       for i in range(numGames):
         game_vscore = int(response.json().get("games")[i]["vTeam"]["score"])
         game_hscore = int(response.json().get("games")[i]["hTeam"]["score"])
@@ -24,7 +25,7 @@ def index():
         if score_difference <= 6:
           vteam_name = response.json().get("games")[i]["vTeam"]["triCode"]
           hteam_name = response.json().get("games")[i]["hTeam"]["triCode"]
-          result += vteam_name + " : " + hteam_name +" \n"
+          result += vteam_name + " : " + hteam_name +", \n"
         #TODO: Return list of games worth watching
     
       return result
