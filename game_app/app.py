@@ -14,11 +14,10 @@ def index():
 
   return check_close_game(NBA_url)
 
-def check_close_game(url: str):
+def check_close_game(url):
   response = requests.get(url)
   numGames = response.json().get("numGames")
-  print(numGames)
-  result = "Games worth watching on " + str(yesterday) + ": " 
+  result = "Games worth watching on " + yesterday_string + ": " 
   # TODO: include checks for NoneTypes and robust API requests
   # TODO: insert response for 0 games worth watching
   for i in range(numGames):
@@ -29,7 +28,6 @@ def check_close_game(url: str):
       vteam_name = response.json().get("games")[i]["vTeam"]["triCode"]
       hteam_name = response.json().get("games")[i]["hTeam"]["triCode"]
       result += vteam_name + " : " + hteam_name +", \n"
-      #TODO: Return list of games worth watching
           
-    return result
+  return result
 
