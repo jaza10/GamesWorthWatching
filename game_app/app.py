@@ -21,9 +21,11 @@ def check_close_game(url, date):
   # TODO: include checks for NoneTypes and robust API requests
   # TODO: insert response for 0 games worth watching
   for i in range(numGames):
-    #TODO: Check if result != empty, then do int cast: Try - Except
-    game_vscore = int(response.json().get("games")[i]["vTeam"]["score"])
-    game_hscore = int(response.json().get("games")[i]["hTeam"]["score"])
+    try:
+      game_vscore = int(response.json().get("games")[i]["vTeam"]["score"])
+      game_hscore = int(response.json().get("games")[i]["hTeam"]["score"])
+    except ValueError:
+      pass
     score_difference = abs(game_vscore - game_hscore)
     if score_difference <= 6:
       vteam_name = response.json().get("games")[i]["vTeam"]["triCode"]
