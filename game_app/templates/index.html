@@ -1,7 +1,7 @@
 <html>
 <title>NBA Games Worth Watching from Last Night</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <style>
@@ -20,11 +20,11 @@ body, html {height: 100%}
     Jan Zawadzki
   </div>
   <div class="w3-display-middle">
-    <h6 class="w3-jumbo w3-animate-top"> Games Worth Watching from {{ date }}
+    <h1 style="font-size:5vw"> Games Worth Watching from {{ date }}
       {% for game in results: %}
-      <li>{{ game }}</li>
+      <li style="font-size:8vw"> {{ game }} </li>
       {% endfor %}  
-    </h6>
+    </h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
   </div>
   <div class="w3-display-bottomleft w3-padding-large">
