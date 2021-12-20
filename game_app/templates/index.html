@@ -17,13 +17,17 @@ body, html {height: 100%}
 <body>
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
-    Jan Zawadzki
+    <a href="https://github.com/jaza10/GamesWorthWatching"> GitHub </a>
   </div>
   <div class="w3-display-middle">
-    <h1 style="font-size:5vw"> Games Worth Watching from {{ date }}
+    {% if not results: %}
+    <h1 style="font-size:3em"> No Games Worth Watching from {{ date }} </h1>
+    {% else %}
+    <h1 style="font-size:1em"> Games Worth Watching from {{ date }}
       {% for game in results: %}
-      <li style="font-size:8vw"> {{ game }} </li>
-      {% endfor %}  
+      <li style="font-size:2em"> {{ game }} </li>
+      {% endfor %}
+    {% endif %}  
     </h1>
     <hr class="w3-border-grey" style="margin:auto;width:40%">
   </div>
