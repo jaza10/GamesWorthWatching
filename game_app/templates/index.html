@@ -17,15 +17,17 @@ body, html {height: 100%}
 <body>
 <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
   <div class="w3-display-topleft w3-padding-large w3-xlarge">
-    <a href="https://github.com/jaza10/GamesWorthWatching" style="font-size:1em" > GitHub </a>
+    <a href="https://github.com/jaza10/GamesWorthWatching"> GitHub </a>
   </div>
   <div class="w3-display-middle">
     {% if not results: %}
     <h1 style="font-size:3em"> No Games Worth Watching from {{ date }} </h1>
     {% else %}
     <h1 style="font-size:1em"> Games Worth Watching from {{ date }}
-      {% for game in results: %}
-      <li style="font-size:2em"> {{ game }} </li>
+      {% for key, value in results.items(): %}
+      <li style="font-size:2em">
+        <a href= {{ value.get('game_summary_url') }}> {{ value.get('vteam_name') }} : {{ value.get('hteam_name') }} </a>
+      </li>
       {% endfor %}
     {% endif %}  
     </h1>
