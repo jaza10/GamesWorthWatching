@@ -30,10 +30,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
         
-      - name: Test with pytest
-        run: |
-          pip install pytest
-          pytest
+      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v2
@@ -63,4 +60,4 @@ jobs:
         with:
           app-name: 'nbagamesworthwatching'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1BCD68154A4447F88F933722820F8699 }}
