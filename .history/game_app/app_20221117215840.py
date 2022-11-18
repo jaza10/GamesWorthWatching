@@ -15,6 +15,13 @@ def main_function():
   yesterday = date.today() - timedelta(1)
   response = requests.get(TODAYS_SCOREBOARD).json()
   return render_template("index.html", date = yesterday, results = return_results(response))
+          
+# write a function to get the hame IDs from the response
+def get_game_ids(response):
+    game_ids = []
+    for game in response["games"]:
+      game_ids.append(game["gameId"])
+    return game_ids
 
 def get_first_game_id(response):
     return response["scoreboard"]["games"][0]["gameId"]
@@ -63,16 +70,18 @@ def get_game_information(response):
     return game_information
 
 def return_results(response):
-    #game_information = get_game_information(response)
+    game_information = get_game_information(response)
     results = {}
     first_game_id = get_first_game_id(response)
     yesterdays_last_game_id = decrement_game_id(first_game_id)
     game_boxscore = get_game_boxscore(yesterdays_last_game_id)
     while (check_if_game_is_from_yesterday(game_boxscore)):
-        if check_if_it_was_a_close_game(game_boxscore):
-            results[yesterdays_last_game_id] = get_game_information(game_boxscore)
+      if check_if_it_was_a_close_game(game_boxscore):
+        results[yesterdays_last_game_id] = get_game_information(game_boxscore)
         yesterdays_last_game_id = decrement_game_id(yesterdays_last_game_id)
         game_boxscore = get_game_boxscore(yesterdays_last_game_id)
     
-    print(results)
     return results
+
+
+
