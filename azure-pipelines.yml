@@ -47,8 +47,6 @@ stages:
       workingDirectory: $(projectRoot)
       displayName: "Install requirements"
 
-    - run: python test_request.py
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
