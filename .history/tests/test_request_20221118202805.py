@@ -4,7 +4,7 @@ from datetime import date, timedelta
 
 from game_app import app
 
-#NBA_url = "http://data.nba.net/10s/prod/v1/20211211/scoreboard.json"
+NBA_url = "http://data.nba.net/10s/prod/v1/20211211/scoreboard.json"
 #yesterday = "20211212"
 
 # TODO: Add test for no games the previous night
@@ -13,7 +13,7 @@ from game_app import app
 
 class TestRequests(unittest.TestCase):
 
-    # write a test for return_results function
+        # write a test for return_results function
     def test_return_results(self):
         testJSON = open('tests/resources/todaysScoreboard_00.json')
         data = json.load(testJSON)
@@ -23,20 +23,8 @@ class TestRequests(unittest.TestCase):
     
     # write a test for get_game_information function
     def test_get_game_information(self):
-        testJSON = open('tests/resources/boxscore_0022200223_close.json')
+        testJSON = open('tests/resources/boxscore_0022200223.json')
         data = json.load(testJSON)
         testJSON.close()
         response = app.get_game_information(data)
         self.assertEqual(response, {'vteam_name': 'DET', 'hteam_name': 'LAC', 'vteam_score': 91, 'hteam_score': 96, 'score_diff': 5, 'game_summary_url': 'https://www.nba.com/game/DET-vs-LAC-0022200223?watch'})
-
-    # write a test for check_if_close function
-    def check_if_it_was_a_close_game(self):
-        testJSON = open('tests/resources/boxscore_0022200223_close.json')
-        data_close = json.load(testJSON)
-        testJSON = open('tests/resources/boxscore_0022200222_not_close.json')
-        data_not_close = json.load(testJSON)
-        testJSON.close()
-        response = app.check_if_it_was_a_close_game(data_close)
-        self.assertEqual(response, True)
-        response = app.check_if_it_was_a_close_game(data_not_close)
-        self.assertEqual(response, False)

@@ -52,6 +52,7 @@ def check_if_it_was_a_close_game(response):
 
 # write a function that collects the most important information about the game
 def get_game_information(response):
+    print(response)
     vteam_name = response["game"]["awayTeam"]["teamTricode"]
     hteam_name = response["game"]["homeTeam"]["teamTricode"]
     vteam_score = response["game"]["awayTeam"]["score"]
@@ -74,5 +75,4 @@ def return_results(response):
         yesterdays_last_game_id = decrement_game_id(yesterdays_last_game_id)
         game_boxscore = get_game_boxscore(yesterdays_last_game_id)
     
-    print(results)
     return results
