@@ -74,5 +74,4 @@ def return_results(response):
         yesterdays_last_game_id = decrement_game_id(yesterdays_last_game_id)
         game_boxscore = get_game_boxscore(yesterdays_last_game_id)
     
-    print(results)
     return results
