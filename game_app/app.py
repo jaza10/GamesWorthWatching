@@ -14,7 +14,12 @@ def main_function():
   # Making sure that right date is fetched each time page is requested, and results are not cached
   yesterday = date.today() - timedelta(1)
   response = requests.get(TODAYS_SCOREBOARD).json()
-  return render_template("index.html", date = yesterday, results = return_results(response))
+  # Checks if the json file doesn't contain results for yesterdays game yet
+  if response["scoreboard"]["games"][0]["homeTeam"]["score"] == 0:
+    return render_template("index.html", date = yesterday, results = return_results_from_yesterday(response))
+  else:
+    return render_template("index.html", date = yesterday, results = return_results_from_today(response))
+    
 
 def get_first_game_id(response):
     return response["scoreboard"]["games"][0]["gameId"]
@@ -62,8 +67,7 @@ def get_game_information(response):
     game_information = {"vteam_name": vteam_name, "hteam_name": hteam_name, "vteam_score": vteam_score, "hteam_score": hteam_score, "score_diff": score_diff, "game_summary_url": game_summary_url}
     return game_information
 
-def return_results(response):
-    #game_information = get_game_information(response)
+def return_results_from_yesterday(response):
     results = {}
     first_game_id = get_first_game_id(response)
     yesterdays_last_game_id = decrement_game_id(first_game_id)
@@ -74,4 +78,19 @@ def return_results(response):
         yesterdays_last_game_id = decrement_game_id(yesterdays_last_game_id)
         game_boxscore = get_game_boxscore(yesterdays_last_game_id)
     
+    return results
+
+def return_results_from_today(response):
+    results = {}
+    for game in response["scoreboard"]["games"]:
+      vteam_score = game["awayTeam"]["score"]
+      hteam_score = game["homeTeam"]["score"]
+      score_diff = abs(vteam_score - hteam_score)
+      if score_diff <= 5:
+        vteam_name = game["awayTeam"]["teamTricode"]
+        hteam_name = game["homeTeam"]["teamTricode"]
+        game_id = game["gameId"]
+        game_summary_url = NBA_GAME_VIDEO_URL.format(vteam_name = vteam_name, hteam_name = hteam_name, game_id = game_id)
+        game_information = {"vteam_name": vteam_name, "hteam_name": hteam_name, "vteam_score": vteam_score, "hteam_score": hteam_score, "score_diff": score_diff, "game_summary_url": game_summary_url}
+        results[game_id] = game_information
     return results
