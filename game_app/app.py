@@ -50,7 +50,7 @@ def check_if_game_is_from_yesterday(response):
 def check_if_it_was_a_close_game(response):
     vteam_score = response["game"]["awayTeam"]["score"]
     hteam_score = response["game"]["homeTeam"]["score"]
-    if abs(vteam_score - hteam_score) <= 5:
+    if abs(vteam_score - hteam_score) <= 5 or response["game"]["period"] > 4: 
         return True
     else:
         return False
@@ -86,11 +86,13 @@ def return_results_from_today(response):
       vteam_score = game["awayTeam"]["score"]
       hteam_score = game["homeTeam"]["score"]
       score_diff = abs(vteam_score - hteam_score)
-      if score_diff <= 5:
+      if score_diff <= 5 or game["period"] > 4: # checks if game went to overtime
         vteam_name = game["awayTeam"]["teamTricode"]
         hteam_name = game["homeTeam"]["teamTricode"]
         game_id = game["gameId"]
         game_summary_url = NBA_GAME_VIDEO_URL.format(vteam_name = vteam_name, hteam_name = hteam_name, game_id = game_id)
         game_information = {"vteam_name": vteam_name, "hteam_name": hteam_name, "vteam_score": vteam_score, "hteam_score": hteam_score, "score_diff": score_diff, "game_summary_url": game_summary_url}
         results[game_id] = game_information
+    # sort the results by score difference
+    results = dict(sorted(results.items(), key=lambda item: item[1]["score_diff"]))
     return results
